@@ -1,10 +1,9 @@
 """Review analysis"""
 import sys
-import json
 import csv
+import json
 from functools import partial
 from collections import defaultdict, Counter
-import six
 from google.cloud.gapic.language.v1beta2 import enums
 from google.cloud.gapic.language.v1beta2 import language_service_client
 from google.cloud.proto.language.v1beta2 import language_service_pb2
@@ -18,8 +17,7 @@ class EntitySentimentAnalysis():
         # Client to Translate API
         self.translate_client = translate.Client()
         # Encoding to pass to API
-        self.encoding = enums.EncodingType.UTF16 if sys.maxunicode == 65535 \
-                                                 else enums.EncodingType.UTF32
+        self.encoding = enums.EncodingType.UTF32
         # Open config file
         with open(sys.argv[1]) as config:
             config_json = json.load(config)
@@ -80,12 +78,10 @@ class EntitySentimentAnalysis():
 
     def entity_sentiment(self, text: str):
         """Identifies relevant entities and records sentiment"""
-        if isinstance(text, six.binary_type):
-            text = text.decode('utf-8')
 
         # Create document, set content, and type
         document = language_service_pb2.Document()
-        document.content = text.encode('utf-8')
+        document.content = text
         document.type = enums.Document.Type.PLAIN_TEXT
 
         # Result from API call
