@@ -24,7 +24,7 @@ class EntitySentimentAnalysis():
         with open(self.data, 'r') as csvfile:
             review_reader = csv.DictReader(csvfile)
             with open('sentiment.csv', 'w') as outfile:
-                writer_fieldnames = review_reader.fieldnames + ['parent_topic', 'topic', 'sentiment']
+                writer_fieldnames = review_reader.fieldnames + ['translated_text', 'parent_topic', 'topic', 'sentiment']
                 review_writer = csv.DictWriter(outfile, fieldnames=writer_fieldnames)
                 review_writer.writeheader()
                 for i, row in enumerate(review_reader):
@@ -38,7 +38,8 @@ class EntitySentimentAnalysis():
                     translated_text = row['text']
                     if row['detected_lang'] != 'en':
                         translated_text = self.translate_client.translate(row['text'])['translatedText']
-
+                    row['translated_text'] = translated_text
+                    
                     sentiments = self.entity_sentiment(translated_text)
                     if sentiments:
                         for parent_topic in sentiments:
