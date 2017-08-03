@@ -48,7 +48,7 @@ class EntitySentimentAnalysis():
                     elif i >= int(sys.argv[2]):
                         break
                     # Print review number and part of the review text
-                    print(i, row['text'][:30]+'...')
+                    print(i, row['author'], row['text'][:30]+'...')
 
                     # Translate non-english reviews to english
                     # and add to output row
