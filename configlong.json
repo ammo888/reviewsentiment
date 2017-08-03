@@ -10,7 +10,9 @@
             "accommodation",
             "place",
             "stay",
-            "environment"
+            "environment",
+            "location",
+            "position"
         ],
         "food": [
             "food",

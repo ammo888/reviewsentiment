@@ -47,6 +47,11 @@ class EntitySentimentAnalysis():
                                 row['topic'] = topic
                                 row['sentiment'] = sentiments[parent_topic][topic]
                                 review_writer.writerow(row)
+                    else:
+                        row['parent_topic'] = 'unknown'
+                        row['topic'] = 'unknown'
+                        row['sentiment'] = 'unknown'
+                        review_writer.writerow(row)
 
     def entity_sentiment(self, text):
         if isinstance(text, six.binary_type):
