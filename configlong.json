@@ -1,0 +1,107 @@
+{   
+    "data" : "reviews.csv",
+    "topics" : {
+        "general": [
+            "everything",
+            "everyone",
+            "hotel",
+            "motel",
+            "apartment",
+            "accommodation",
+            "place",
+            "stay",
+            "environment"
+        ],
+        "food": [
+            "food",
+            "restaurant",
+            "cuisine",
+            "breakfast",
+            "lunch",
+            "dinner",
+            "snacks",
+            "coffee",
+            "tea",
+            "selection",
+            "menu",
+            "dish"
+        ],
+        "facilities": [
+            "facilities",
+            "pool",
+            "spa",
+            "bar",
+            "cafe",
+            "lounge",
+            "massage"
+        ],
+        "room": [
+            "suite",
+            "penthouse",
+            "room",
+            "bed",
+            "floor",
+            "wall",
+            "door",
+            "kitchen",
+            "bathroom",
+            "toilet",
+            "shower",
+            "toiletries",
+            "towel",
+            "laundry",
+            "water",
+            "internet",
+            "wifi",
+            "connection",
+            "speed",
+            "bath",
+            "tv"
+        ],
+        "service": [
+            "service",
+            "hospitality",
+            "reservation",
+            "reception",
+            "lobby",
+            "desk",
+            "concierge",
+            "porter",
+            "butler",
+            "check",
+            "check in",
+            "check out",
+            "staff",
+            "workers",
+            "waiter",
+            "waitress",
+            "housekeeping",
+            "maid"
+        ],
+        "outside": [
+            "city",
+            "neighborhood",
+            "transport",
+            "travel",
+            "taxi",
+            "car",
+            "bus",
+            "tour",
+            "attraction",
+            "shop",
+            "mall",
+            "museum",
+            "market"
+        ]
+    },
+    "classes" : {
+        "negative" : {
+            "min" : -10.0,
+            "max" : 0.0
+        },
+        "positive" : {
+            "min" : 0.0,
+            "max" : 10.0
+        }
+    }
+}

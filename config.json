@@ -1,0 +1,48 @@
+{   
+    "data" : "reviews.csv",
+    "topics" : {
+        "housekeeping" : [
+            "housekeeping",
+            "towel",
+            "bedsheet",
+            "shower",
+            "toilet",
+            "laundry",
+            "floor",
+            "bathroom",
+            "toiletry",
+            "garbage",
+            "dishwasher",
+            "slipper",
+            "curtain",
+            "air conditioner",
+            "mattress",
+            "drain"
+        ],
+        "restaurant" : [
+            "restaurant",
+            "menu",
+            "coffee",
+            "tea",
+            "food"
+        ],
+        "wifi" : [
+            "wifi",
+            "connection",
+            "speed"
+        ],
+        "service" : [
+            "service"
+        ]
+    },
+    "classes" : {
+        "negative" : {
+            "min" : -10.0,
+            "max" : 0.0
+        },
+        "positive" : {
+            "min" : 0.0,
+            "max" : 10.0
+        }
+    }
+}
