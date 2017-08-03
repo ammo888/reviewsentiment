@@ -39,7 +39,7 @@ class EntitySentimentAnalysis():
                     if row['detected_lang'] != 'en':
                         translated_text = self.translate_client.translate(row['text'])['translatedText']
                     row['translated_text'] = translated_text
-                    
+
                     sentiments = self.entity_sentiment(translated_text)
                     if sentiments:
                         for parent_topic in sentiments:
@@ -91,6 +91,6 @@ class EntitySentimentAnalysis():
 
 if __name__ == '__main__':
     assert len(sys.argv) == 3, "Usage: python newanalysis.py <configname.json> <# of reviews>"
-    assert sys.argv[2].isdigit(), "<# of digits> has to be an integer"
+    assert sys.argv[2].isdigit(), "<# of reviews> has to be an integer"
     analyzer = EntitySentimentAnalysis()
     analyzer.analyze_reviews()
