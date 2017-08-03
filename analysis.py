@@ -1,8 +1,8 @@
 import sys
 import json
 import csv
-from functools import reduce, partial
-from collections import defaultdict
+from functools import partial
+from collections import defaultdict, Counter
 import six
 from google.cloud.gapic.language.v1beta2 import enums
 from google.cloud.gapic.language.v1beta2 import language_service_client
@@ -27,12 +27,13 @@ class EntitySentimentAnalysis():
                 writer_fieldnames = review_reader.fieldnames + ['parent_topic', 'topic', 'sentiment']
                 review_writer = csv.DictWriter(outfile, fieldnames=writer_fieldnames)
                 review_writer.writeheader()
-                count = 0
                 for i, row in enumerate(review_reader):
-                    if i > 100:
+                    if int(sys.argv[2]) == 0:
+                        pass
+                    elif i > int(sys.argv[2]):
                         break
 
-                    print(i, row['author'], row['text'][:20]+'...')
+                    print(i, row['text'][:30]+'...')
 
                     translated_text = row['text']
                     if row['detected_lang'] != 'en':
@@ -54,27 +55,36 @@ class EntitySentimentAnalysis():
         document = language_service_pb2.Document()
         document.content = text.encode('utf-8')
         document.type = enums.Document.Type.PLAIN_TEXT
-        
+
         result = self.language_client.analyze_entity_sentiment(
             document, self.encoding)
 
         sentiments = defaultdict(partial(defaultdict, float))
+        topic_counter = Counter()
         for entity in result.entities:
             if entity.sentiment.score != 0 and entity.sentiment.magnitude != 0:
                 for parent_topic in self.topics:
                     for topic in self.topics[parent_topic]:
                         if topic in entity.name.lower():
                             sentiments[parent_topic][topic] += entity.sentiment.score
+                            topic_counter[topic] += 1
+
         def classify(self, val):
             for sent_class in self.sentiment_classes:
                 class_range = self.sentiment_classes[sent_class]
                 if class_range['min'] <= val and val < class_range['max']:
                     return sent_class
             return None
-        sentiments = {pt:{t:classify(self, sentiments[pt][t]) for t in sentiments[pt]} for pt in sentiments}
+
+        sentiments = {pt:
+                        {
+                            t:classify(self, sentiments[pt][t] / topic_counter[t])
+                            for t in sentiments[pt]
+                        } for pt in sentiments}
         return sentiments
 
 if __name__ == '__main__':
-    assert len(sys.argv) == 2, "Usage: python newanalysis.py <configname.json>"
+    assert len(sys.argv) == 3, "Usage: python newanalysis.py <configname.json> <# of reviews>"
+    assert sys.argv[2].isdigit(), "<# of digits> has to be an integer"
     analyzer = EntitySentimentAnalysis()
     analyzer.analyze_reviews()
