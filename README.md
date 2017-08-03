@@ -18,7 +18,8 @@
   $ cd reviewsentiment
   $ python3 -m venv env
   $ source env/bin/activate
-  (env) pip install -r requirements.txt # might need sudo
+  (env) pip install --upgrade setuptools
+  (env) pip install -r requirements.txt
   ```
 
   Setup environment variable for API access
@@ -28,7 +29,7 @@
 
   Running the program
   ```fish
-  (env) python analysis.py <config.json> <# of reviews>
+  (env) python analysis.py <configfile.json> <# of reviews>
   ```
   `sentiment.csv` should be created with the same information as the original csv file, but with extra three headers: `parent_topic`, `topic`, `sentiment`.
 
