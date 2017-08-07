@@ -26,6 +26,10 @@ class EntitySentimentAnalysis():
             self.topics = config_json['topics']
             self.sentiment_classes = config_json['classes']
 
+    def translate(self, text):
+        translation = self.translate_client.translate(text)
+        return translation['translatedText']
+
     def analyze_reviews(self):
         """Analyzes reviews using NL API and Translate API"""
         with open(self.data, 'r') as csvfile:
@@ -48,18 +52,23 @@ class EntitySentimentAnalysis():
                     elif i >= int(sys.argv[2]):
                         break
                     # Print review number and part of the review text
-                    print(i, row['author'], row['text'][:30]+'...')
+                    print(i, row['author'], row['comment'][:30]+'...')
 
                     # Translate non-english reviews to english
                     # and add to output row
-                    translated_text = row['text']
-                    if row['detected_lang'] != 'en':
-                        translation = self.translate_client.translate(row['text'])
-                        translated_text = translation['translatedText']
-                    row['translated_text'] = translated_text
+                    translated_text = row['comment'] if row['language'] == 'en' else self.translate(row['comment'])
 
                     # Entity sentiment analysis
-                    sentiments = self.entity_sentiment(translated_text)
+                    # If translation fails (due to nonsupported language), 
+                    # translate to english and try again
+                    try:
+                        sentiments = self.entity_sentiment(translated_text)
+                    except:
+                        translated_text = self.translate(translated_text)
+                        sentiments = self.entity_sentiment(translated_text)
+                    finally:
+                        row['translated_text'] = translated_text
+
                     # If any relevant entities identified
                     if sentiments:
                         for parent_topic in sentiments:

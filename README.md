@@ -72,9 +72,9 @@
 
   `"data"` value is the relative path to the reviews CSV file. The required fieldnames are:
 
-  * `"detected_lang"` - this is used to determine whether the Translation API is needed to be called to translate to English.
+  * `"language"` - this is used to determine whether the Translation API is needed to be called to translate to English.
 
-  * `"text"` - the body of the review
+  * `"comment"` - the body of the review
 
 ### Topics
 
