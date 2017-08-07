@@ -4,8 +4,9 @@ maketopics.py
 oldanalysis.py
 reviews.csv
 sentiment.csv
-My First Project-a49226267d8c.json
-
+*.json
+!config.json
+!configlong.json
 # VSCode
 .vscode/
 
