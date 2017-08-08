@@ -7,6 +7,7 @@ sentiment.csv
 *.json
 !config.json
 !configlong.json
+
 # VSCode
 .vscode/
 

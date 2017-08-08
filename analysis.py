@@ -63,7 +63,7 @@ class EntitySentimentAnalysis():
                     # translate to english and try again
                     try:
                         sentiments = self.entity_sentiment(translated_text)
-                    except:
+                    except Exception:
                         translated_text = self.translate(translated_text)
                         sentiments = self.entity_sentiment(translated_text)
                     finally:
